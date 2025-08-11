@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Employee Manager</title>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            padding: 8px;
+        }
+        table {
+            margin-bottom: 20px;
+            width: 60%;
+        }
+        *{
+            background-color: lightgreen;
+        }
+        table{
+            background-color: #fff;
+        }
+        th{
+            background-color: rgb(179, 34, 34);
+        }
+        td{
+            background-color: rgb(255, 87, 87);
+        }
+        input{
+            background-color: rgb(250, 250, 95);
+            padding: 5px;
+        }
+        h2{
+            font-size: xx-large;
+        }
+        button:active{
+            background-color: aqua;
+        }
+    </style>
+</head>
+<body>
+    <div class="main">
+        <h2>All Employees :</h2>
+
+    <table id="employeeTable">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Date of Joining</th>
+                <th>Email</th>
+            </tr>
+        </thead>
+        <tbody id="employeeBody">
+            <!-- Filled dynamically -->
+        </tbody>
+    </table>
+
+    <input type="number" id="deleteId" placeholder="Enter ID to delete">
+    <button onclick="deleteEmployee()">Delete</button>
+    <a href="{% url 'registration' %}"> Add new Memeber </a>
+    </div>
+
+    <script>
+        // Get CSRF token from cookie
+        function getCSRFToken() {
+            let name = "csrftoken=";
+            let decodedCookie = decodeURIComponent(document.cookie);
+            let cookies = decodedCookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                let c = cookies[i].trim();
+                if (c.indexOf(name) === 0) return c.substring(name.length, c.length);
+            }
+            return "";
+        }
+
+        // Load all employees when page loads
+        window.onload = function() {
+            fetch('http://127.0.0.1:8000/api/getall-employees/')
+                .then(response => response.json())
+                .then(data => {
+                    const tbody = document.getElementById('employeeBody');
+                    tbody.innerHTML = ''; // Clear previous
+                    data.forEach(emp => {
+                        addEmployeeRow(emp.id, emp);
+                    });
+                });
+        };
+
+        // Add employee row to table
+        function addEmployeeRow(id, emp) {
+            const tbody = document.getElementById('employeeBody');
+            const row = document.createElement('tr');
+            row.setAttribute('data-id', id);
+
+            row.innerHTML = `
+                <td>${id}</td>
+                <td>${emp.First_Name} ${emp.Last_Name}</td>
+                <td>${emp.Date_of_Joining}</td>
+                <td>${emp.Email}</td>
+            `;
+            tbody.appendChild(row);
+        }
+
+        // Delete employee by ID
+        function deleteEmployee() {
+            const id = document.getElementById('deleteId').value.trim();
+            if (!id) {
+                alert("Please enter a valid ID.");
+                return;
+            }
+
+            const csrftoken = getCSRFToken();
+
+            fetch(`http://127.0.0.1:8000/api/delete-employees/${id}/`, {
+                method: 'DELETE',
+                headers: {
+                    'X-CSRFToken': csrftoken,
+                    'Content-Type': 'application/json',
+                }
+            })
+            .then(response => {
+                if (response.status === 204) {
+                    const row = document.querySelector(`tr[data-id='${id}']`);
+                    if (row) row.remove();
+                    alert('Employee deleted successfully!');
+                    document.getElementById('deleteId').value = '';
+                } else if (response.status === 404) {
+                    alert('Employee not found.');
+                } else {
+                    alert('Failed to delete employee.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+    </script>
+</body>
+</html>
