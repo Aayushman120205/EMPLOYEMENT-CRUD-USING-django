@@ -1,0 +1,72 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.box{
+    margin: 0;
+    padding: 0;
+    background-image:url(images/Bg.jpg);
+    background-repeat: no-repeat;
+    background-position:center;
+    background-size: cover;
+    /* height: 642px;
+    width: 1358px; */
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loginbox{
+    background-color: rgba(0,0,0,0.75);
+    height:60vh;
+    width:55vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 9px;
+    border-radius: 11px;
+}
+input{
+    border: none;
+    background-color: rgba(0,0,0,0.00001);
+    border-bottom: 2px solid #3469db;
+    padding: 2px;
+    color: beige;
+}
+
+#Last_Name:focus{
+    border-bottom-color: beige;
+}
+.header{
+    color: rgb(243, 93, 23);
+    font-size: x-large;
+    margin-bottom: 8px;
+}
+label{
+    color: rgb(243,93,23);
+    font-size: 20px;
+}
+
+.button{
+    margin-top: 15px;
+    display: flex;
+    flex-direction:  column;
+    gap: 6px;
+}
+#Save{
+    padding: 2px;
+    font-size: 18px;
+    background-color: darkblue;
+    border: none;
+    border-radius: 5px;
+}
+
+#Save:active {
+    background-color: rgb(0, 153, 255);
+  }
+
+

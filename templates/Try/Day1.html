@@ -1,0 +1,76 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            color: white;    
+        }
+        .major{
+            background-image: url("{%static 'images/IOTimage.jpg'%}");
+            margin: 0;
+            padding: 0;
+            background-repeat: no-repeat;
+            background-position:center;
+            background-size: cover;
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }   
+        .content {
+            display: flex;
+            align-items: center;
+            justify-content:center;
+            gap: 200px;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 15px;
+        }
+        .text-box {
+            color: #00FFFF;
+            font-size: 34px;
+            font-weight: bold;
+            text-shadow: 1px 1px 3px black;
+        }
+        .image-box img {
+            width: 200px;
+            height: 200px;
+            border-radius: 12px;
+            object-fit: cover;
+            border: 2px solid #00FFFF;
+        }
+        .image-box{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="major">
+    <div class="content">
+        <div class="text-box">
+            I am Aayushman, <br>
+            Today is my first day as an intern at<br>
+            Taikisha Engineering India Private Ltd.
+        </div>
+
+        <div class="image-box">
+        <img src="{%static 'images/Aayushman.jpg'%}" alt="My Photo">
+        <a href="/delete">Delete Employee</a>
+        </div>
+  </div>
+  </div>
+</body>
+</html>
